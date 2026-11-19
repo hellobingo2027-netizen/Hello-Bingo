@@ -10,7 +10,7 @@ MONGO_URI = os.environ.get("MONGO_URI")
 if not MONGO_URI:
     raise RuntimeError("MONGO_URI is not set. Set the real MongoDB URI in .env")
 client = MongoClient(MONGO_URI)
-db = client["adwa_bingo"]
+db = client["hello_bingo"]
 
 # Collections (Like Tables)
 users_col = db["users"]
