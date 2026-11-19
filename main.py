@@ -97,7 +97,7 @@ def send_telegram_notify(chat_id, text):
         urllib.request.urlopen(req, timeout=10)
     except Exception as e:
         print(f"[send_telegram_notify] error sending to {chat_id}: {e}")
-BOT_USERNAME = "adwabingolasttestbot"
+BOT_USERNAME = "hellobingolasttestbot"
 def _env_admin_ids():
     raw = os.environ.get("ADMIN_IDS", "7627811244,1119881250,2073850894")
     ids = [int(p.strip()) for p in raw.split(",") if p.strip().isdigit()]
@@ -413,8 +413,8 @@ def legacy_state_for_stake(stake):
 TEXTS = {
     'select_language': {'am': "👇 ቋንቋ ይምረጡ / Please select your language", 'en': "👇 Please select your language"},
     'welcome_new': {
-        'am': "🎉 እንኳን ወደ አድዋ Bingo በደህና መጡ!\n\n1️⃣ ከታች ያለውን \"📱 ስልክ ቁጥር ያጋሩ\" ይጫኑ\n2️⃣ ስልክ ቁጥርዎን ያረጋግጡ\n3️⃣ ከዚያ በኋላ መጫወት ይጀምሩ! 🚀\n\n👇 ለመጀመር ስልክ ቁጥርዎን ያጋሩ",
-        'en': "🎉 Welcome to our Adwa Bingo Game!\n\n1️⃣ Click the button below to share your phone number\n2️⃣ Verify your number\n3️⃣ Start playing! 🚀\n\n👇 Share your phone number to begin:"
+        'am': "🎉 እንኳን ወደ ሄሎ Bingo በደህና መጡ!\n\n1️⃣ ከታች ያለውን \"📱 ስልክ ቁጥር ያጋሩ\" ይጫኑ\n2️⃣ ስልክ ቁጥርዎን ያረጋግጡ\n3️⃣ ከዚያ በኋላ መጫወት ይጀምሩ! 🚀\n\n👇 ለመጀመር ስልክ ቁጥርዎን ያጋሩ",
+        'en': "🎉 Welcome to our Hello Bingo Game!\n\n1️⃣ Click the button below to share your phone number\n2️⃣ Verify your number\n3️⃣ Start playing! 🚀\n\n👇 Share your phone number to begin:"
     },
     'share_phone_btn': {'am': "📱 ስልክ ቁጥር ያጋሩ", 'en': "📱 Share Phone Number"},
     'welcome_back': {'am': "👋 እንኳን ደህና መጡ!", 'en': "👋 Welcome back!"},
@@ -423,8 +423,8 @@ TEXTS = {
         'en': "⚠️ You are already registered!\n\n📱 Phone: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n👥 Referrals: {ref_count}\n\n👇 Choose an option below:"
     },
     'register_success': {
-        'am': "🎉 እንኳን ወደ አድዋ Bingo ቤተሰብ በደህና መጡ!\n\n✅ ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል!\n\n📱 ስልክ ቁጥር: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 አሁን መጫወት ለመጀመር ከታች ያለውን ቁልፍ ይጫኑ!\n🍀 መልካም እድል!",
-        'en': "🎉 Welcome to the Adwa Bingo Family!\n\n✅ Registration successful!\n\n📱 Phone: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 Click the menu below to start playing!\n🍀 Good luck!"
+        'am': "🎉 እንኳን ወደ ሄሎ Bingo ቤተሰብ በደህና መጡ!\n\n✅ ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል!\n\n📱 ስልክ ቁጥር: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 አሁን መጫወት ለመጀመር ከታች ያለውን ቁልፍ ይጫኑ!\n🍀 መልካም እድል!",
+        'en': "🎉 Welcome to the Hello Bingo Family!\n\n✅ Registration successful!\n\n📱 Phone: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 Click the menu below to start playing!\n🍀 Good luck!"
     },
     'deposit_prompt': {'am': "💳 ምን ያህል ማስገባት ይፈልጋሉ?\n(Enter amount)\n\nMin / ዝቅተኛ: 10 ብር / Birr", 'en': "💳 How much would you like to deposit?\n(Enter amount)\n\nMin: 10 Birr"},
     'withdraw_prompt': {
@@ -1059,12 +1059,12 @@ def serve_index():
 def api_ping():
     return jsonify({'success': True, 'message': 'API is running', 'time': time_module.time()})
 
-@flask_app.route('/download/adwa_bingo_bot.zip', methods=['GET'])
+@flask_app.route('/download/hello_bingo_bot.zip', methods=['GET'])
 def api_download_bot():
-    path = '/root/jarvis/adwa_bingo_bot.zip'
+    path = '/root/jarvis/hello_bingo_bot.zip'
     if not os.path.exists(path):
         return jsonify({'success': False, 'error': 'zip not ready yet'}), 404
-    return send_file(path, as_attachment=True, download_name='adwa_bingo_bot.zip', mimetype='application/zip')
+    return send_file(path, as_attachment=True, download_name='hello_bingo_bot.zip', mimetype='application/zip')
 
 @flask_app.route('/api/update_name', methods=['POST', 'OPTIONS'])
 def api_update_name():
