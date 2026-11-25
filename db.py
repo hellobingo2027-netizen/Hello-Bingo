@@ -10,7 +10,7 @@ MONGO_URI = os.environ.get("MONGO_URI")
 if not MONGO_URI:
     raise RuntimeError("MONGO_URI is not set. Set the real MongoDB URI in .env")
 client = MongoClient(MONGO_URI)
-db = client["hello_bingo"]
+db = client["adwa_bingo"]
 
 # Collections (Like Tables)
 users_col = db["users"]
@@ -178,7 +178,8 @@ def get_referral_count(user_id):
 
 def get_depositing_referrals_count(user_id):
     invited_ids = [u["user_id"] for u in users_col.find({"referred_by": user_id}, {"user_id": 1})]
-    return transactions_col.count_documents({"user_id": {"$in": invited_ids}, "type": "deposit", "status": "completed"})
+    # DISTINCT users who deposited (not the number of deposit transactions)
+    return len(transactions_col.distinct("user_id", {"user_id": {"$in": invited_ids}, "type": "deposit", "status": "completed"}))
 
 def get_total_referral_deposits(user_id):
     invited_ids = [u["user_id"] for u in users_col.find({"referred_by": user_id}, {"user_id": 1})]
@@ -194,11 +195,12 @@ def get_total_referral_deposits(user_id):
 # TRANSACTION FUNCTIONS
 # ==========================================
 
-def add_transaction(user_id, tx_type, amount, method="System", tx_id=None, status='completed'):
+def add_transaction(user_id, tx_type, amount, method="System", tx_id=None, status='completed', row_id=None):
     if tx_id is None and tx_type in ('deposit', 'withdraw'):
         tx_id = f"{tx_type.upper()}_{user_id}_{datetime.utcnow().strftime('%Y%m%d%H%M%S%f')}"
     now = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-    row_id = get_next_id("transactions")
+    if row_id is None:
+        row_id = get_next_id("transactions")   # new number; a caller can pass its own to keep an earlier number
     transactions_col.insert_one({
         "id": row_id, "user_id": user_id, "type": tx_type, "amount": amount,
         "method": method, "tx_id": tx_id, "status": status, "time": now
@@ -311,6 +313,32 @@ def reject_withdrawal(transaction_id):
     users_col.update_one({"user_id": t["user_id"]}, {"$inc": {"main_balance": t["amount"]}})
     return True, t["user_id"], t["amount"]
 
+def get_user_stats_map(user_ids):
+    """Real numbers for a group of users in a FIXED number of queries (not 3 per
+    row): name, balances, games played / won and invites. Used by the Withdrawals
+    table so every row shows real figures without opening the Users page first."""
+    ids = list({i for i in user_ids if i is not None})
+    stats = {i: {'first_name': '', 'main_balance': 0, 'play_balance': 0, 'games_played': 0,
+                 'games_won': 0, 'referral_count': 0, 'is_agent': 0} for i in ids}
+    if not ids:
+        return stats
+    for u in users_col.find({"user_id": {"$in": ids}}):
+        s = stats[u["user_id"]]
+        s['first_name'] = u.get("first_name", '') or ''
+        s['main_balance'] = u.get("main_balance", 0)
+        s['play_balance'] = u.get("play_balance", 0)
+        s['is_agent'] = u.get("is_agent", 0)
+    for r in game_sessions_col.aggregate([{"$match": {"user_id": {"$in": ids}}},
+                                          {"$group": {"_id": "$user_id", "n": {"$sum": 1}}}]):
+        stats[r["_id"]]['games_played'] = r["n"]
+    for r in game_sessions_col.aggregate([{"$match": {"user_id": {"$in": ids}, "status": "Won"}},
+                                          {"$group": {"_id": "$user_id", "n": {"$sum": 1}}}]):
+        stats[r["_id"]]['games_won'] = r["n"]
+    for r in users_col.aggregate([{"$match": {"referred_by": {"$in": ids}}},
+                                  {"$group": {"_id": "$referred_by", "n": {"$sum": 1}}}]):
+        stats[r["_id"]]['referral_count'] = r["n"]
+    return stats
+
 def get_all_withdrawals(limit=100):
     pipeline = [
         {"$match": {"type": "withdraw"}},
@@ -327,6 +355,9 @@ def get_all_withdrawals(limit=100):
             'phone': u.get("phone", '—'), 'amount': t["amount"], 'method': t.get("method", 'Telebirr'),
             'status': t.get("status", 'pending'), 'time': t.get("time", '')
         })
+    stats = get_user_stats_map([w['user_id'] for w in withdrawals])
+    for w in withdrawals:
+        w.update(stats.get(w['user_id'], {}))
     return withdrawals
 
 def get_pending_withdrawals_count():
@@ -601,7 +632,7 @@ def get_dashboard_stats():
 # ADMIN: GAME HISTORY
 # ==========================================
 
-def get_admin_game_history(limit=100):
+def get_admin_game_history(limit=100, period=None):
     games = []
 
     def cards_for(game_id, fallback):
@@ -634,7 +665,15 @@ def get_admin_game_history(limit=100):
         })
 
     # 2) FINISHED games — from the real game_history archive
-    for h in game_history_col.find().sort("date", -1).limit(limit):
+    query = {}
+    if period:
+        now = datetime.utcnow()
+        if period == 'daily':
+            query = {"date": {"$regex": "^" + now.strftime('%Y-%m-%d')}}
+        else:
+            days = {'weekly': 7, 'monthly': 30, 'yearly': 365}.get(period, 7)
+            query = {"date": {"$gte": (now - timedelta(days=days)).strftime('%Y-%m-%d %H:%M:%S')}}
+    for h in game_history_col.find(query).sort("date", -1).limit(limit):
         game_id = h.get("game_id")
         stake = h.get("stake", 10)
         winners_list = h.get("winner", []) or []
@@ -836,6 +875,11 @@ def get_admin_reports(period='daily'):
             m = dt.strftime('%Y-%m')
             dep, wit, pay, games = get_stats_for_date(m)
             rows.append({'date': m, 'deposits': dep, 'withdrawals': wit, 'payout': pay, 'games': games, 'profit': dep - wit - pay})
+    elif period == 'yearly':
+        for i in range(2, -1, -1):
+            y = str(datetime.utcnow().year - i)
+            dep, wit, pay, games = get_stats_for_date(y)
+            rows.append({'date': y, 'deposits': dep, 'withdrawals': wit, 'payout': pay, 'games': games, 'profit': dep - wit - pay})
     return rows
 
 
