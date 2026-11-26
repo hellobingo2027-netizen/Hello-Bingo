@@ -97,7 +97,7 @@ def send_telegram_notify(chat_id, text):
         urllib.request.urlopen(req, timeout=10)
     except Exception as e:
         print(f"[send_telegram_notify] error sending to {chat_id}: {e}")
-BOT_USERNAME = "adwabingolasttestbot"
+BOT_USERNAME = "Hello_BingoBot"
 def _env_admin_ids():
     raw = os.environ.get("ADMIN_IDS", "7627811244,1119881250,2073850894")
     ids = [int(p.strip()) for p in raw.split(",") if p.strip().isdigit()]
@@ -321,10 +321,10 @@ def verify_telebirr_sms(sms_text: str, expected_amount: int) -> dict:
             'reason': (
                 "❌ Could not find a transaction ID in that message.\n\n"
                 "Please paste the *exact* SMS you received from Telebirr after sending money.\n\n"
-                "Still stuck? Contact support: @one\\_day\\_82\n\n"
+                "Still stuck? Contact support: @Hello\\_Bingo\\_Support\n\n"
                 "የግብይት መለያ (transaction ID) ማግኘት አልቻልንም።\n\n"
                 "ገንዘብ ከላኩ በኋላ ከቴሌብር የተቀበሉትን ትክክለኛ SMS ይላኩ።\n\n"
-                "ለጥያቄ እና ለድጋፍ፦ @one\\_day\\_82"
+                "ለጥያቄ እና ለድጋፍ፦ @Hello\\_Bingo\\_Support"
             )
         }
 
@@ -335,11 +335,11 @@ def verify_telebirr_sms(sms_text: str, expected_amount: int) -> dict:
                 f"❌ Transaction already used!\n\n"
                 f"Transaction `{transaction_id}` was already submitted.\n"
                 f"Each SMS can only be used once.\n\n"
-                f"Think this is a mistake? Contact support: @one\\_day\\_82\n\n"
+                f"Think this is a mistake? Contact support: @Hello\\_Bingo\\_Support\n\n"
                 f"❌ ግብይቱ አስቀድሞ ጥቅም ላይ ውሏል!\n\n"
                 f"ግብይቱ {transaction_id} አስቀድሞ ተልኳል።\n"
                 f"እያንዳንዱ SMS (Message) አንድ ጊዜ ብቻ ነው ጥቅም ላይ ሊውል የሚችለው።\n\n"
-                f"ለጥያቄ እና ለድጋፍ፦ @one\\_day\\_82"
+                f"ለጥያቄ እና ለድጋፍ፦ @Hello\\_Bingo\\_Support"
             )
         }
 
@@ -352,11 +352,11 @@ def verify_telebirr_sms(sms_text: str, expected_amount: int) -> dict:
                 f"❌ Could not verify this payment.\n\n"
                 f"Reason: {reason_en}\n\n"
                 f"Please make sure you sent the money to the correct account: `{MERCHANT_PHONE}`\n\n"
-                f"Contact support: @one\\_day\\_82\n\n"
+                f"Contact support: @Hello\\_Bingo\\_Support\n\n"
                 f"❌ ይህን ክፍያ ማረጋገጥ አልቻልንም።\n\n"
                 f"ምክንያት: {reason_am}\n\n"
                 f"ገንዘቡ ወደ ትክክለኛው አካውንት መላኩን ያረጋግጡ፦ `{MERCHANT_PHONE}`\n\n"
-                f"ለጥያቄ እና ለድጋፍ፦ @one\\_day\\_82"
+                f"ለጥያቄ እና ለድጋፍ፦ @Hello\\_Bingo\\_Support"
             )
         }
 
@@ -374,10 +374,10 @@ def verify_telebirr_sms(sms_text: str, expected_amount: int) -> dict:
 WITHDRAW_CLOSED_MSG = (
     "⏰ Dear customer, withdrawals are only available from 1:00 in the morning until 6:00 at night (Ethiopian local time).\n\n"
     "Please try again during these hours.\n\n"
-    "Questions? Contact support: @one_day_82\n\n"
+    "Questions? Contact support: @Hello_Bingo_Support\n\n"
     "⏰ ውድ ደንበኛችን፣ ገንዘብ ማውጣት የሚቻለው ከጠዋቱ 1:00 እስከ ምሽቱ 6:00 (በኢትዮጵያ የሰዓት አቆጣጠር) ብቻ ነው።\n\n"
     "እባክዎ በእነዚህ ሰዓታት ውስጥ ይሞክሩ።\n\n"
-    "ለጥያቄ እና ለድጋፍ፦ @one_day_82"
+    "ለጥያቄ እና ለድጋፍ፦ @Hello_Bingo_Support"
 )
 
 def is_withdraw_open() -> bool:
@@ -441,8 +441,8 @@ def legacy_state_for_stake(stake):
 TEXTS = {
     'select_language': {'am': "👇 ቋንቋ ይምረጡ / Please select your language", 'en': "👇 Please select your language"},
     'welcome_new': {
-        'am': "🎉 እንኳን ወደ አድዋ Bingo በደህና መጡ!\n\n1️⃣ ከታች ያለውን \"📱 ስልክ ቁጥር ያጋሩ\" ይጫኑ\n2️⃣ ስልክ ቁጥርዎን ያረጋግጡ\n3️⃣ ከዚያ በኋላ መጫወት ይጀምሩ! 🚀\n\n👇 ለመጀመር ስልክ ቁጥርዎን ያጋሩ",
-        'en': "🎉 Welcome to our Adwa Bingo Game!\n\n1️⃣ Click the button below to share your phone number\n2️⃣ Verify your number\n3️⃣ Start playing! 🚀\n\n👇 Share your phone number to begin:"
+        'am': "🎉 እንኳን ወደ ሄሎ Bingo በደህና መጡ!\n\n1️⃣ ከታች ያለውን \"📱 ስልክ ቁጥር ያጋሩ\" ይጫኑ\n2️⃣ ስልክ ቁጥርዎን ያረጋግጡ\n3️⃣ ከዚያ በኋላ መጫወት ይጀምሩ! 🚀\n\n👇 ለመጀመር ስልክ ቁጥርዎን ያጋሩ",
+        'en': "🎉 Welcome to our Hello Bingo Game!\n\n1️⃣ Click the button below to share your phone number\n2️⃣ Verify your number\n3️⃣ Start playing! 🚀\n\n👇 Share your phone number to begin:"
     },
     'share_phone_btn': {'am': "📱 ስልክ ቁጥር ያጋሩ", 'en': "📱 Share Phone Number"},
     'welcome_back': {'am': "👋 እንኳን ደህና መጡ!", 'en': "👋 Welcome back!"},
@@ -451,8 +451,8 @@ TEXTS = {
         'en': "⚠️ You are already registered!\n\n📱 Phone: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n👥 Referrals: {ref_count}\n\n👇 Choose an option below:"
     },
     'register_success': {
-        'am': "🎉 እንኳን ወደ አድዋ Bingo ቤተሰብ በደህና መጡ!\n\n✅ ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል!\n\n📱 ስልክ ቁጥር: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 አሁን መጫወት ለመጀመር ከታች ያለውን ቁልፍ ይጫኑ!\n🍀 መልካም እድል!",
-        'en': "🎉 Welcome to the Adwa Bingo Family!\n\n✅ Registration successful!\n\n📱 Phone: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 Click the menu below to start playing!\n🍀 Good luck!"
+        'am': "🎉 እንኳን ወደ ሄሎ Bingo ቤተሰብ በደህና መጡ!\n\n✅ ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል!\n\n📱 ስልክ ቁጥር: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 አሁን መጫወት ለመጀመር ከታች ያለውን ቁልፍ ይጫኑ!\n🍀 መልካም እድል!",
+        'en': "🎉 Welcome to the Hello Bingo Family!\n\n✅ Registration successful!\n\n📱 Phone: {phone}\n\n💰 Main Wallet: {main} ETB\n🎮 Play Wallet: {play} ETB\n\n🎯 Click the menu below to start playing!\n🍀 Good luck!"
     },
     'deposit_prompt': {'am': "💳 ምን ያህል ማስገባት ይፈልጋሉ?\n(Enter amount)\n\nMin / ዝቅተኛ: 10 ብር / Birr", 'en': "💳 How much would you like to deposit?\n(Enter amount)\n\nMin: 10 Birr"},
     'withdraw_prompt': {
@@ -592,7 +592,7 @@ async def get_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
             set_user_language(user_id, lang)
         except Exception as e:
             print(f"❌ Registration error for new user {user_id}: {e}")
-            await update.message.reply_text("❌ Registration failed. Please try again.\nContact support: @one_day_82")
+            await update.message.reply_text("❌ Registration failed. Please try again.\nContact support: @Hello_Bingo_Support")
             return
     if ref_by:
         try:
@@ -616,7 +616,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE, custom
     first_name = update.effective_user.first_name or ''
 
     if is_user_banned(user_id):
-        await update.message.reply_text("🚫 You are banned from using this bot.\n\nContact support if you believe this is a mistake: @one_day_82")
+        await update.message.reply_text("🚫 You are banned from using this bot.\n\nContact support if you believe this is a mistake: @Hello_Bingo_Support")
         return
 
     if not has_valid_phone(user_id):
@@ -646,7 +646,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE, custom
         return
 
     if text in ["🏢 Support / ድጋፍ", "🏢 Support"]:
-        support_msg = "☎️ Support\n\nFor any comments or questions, contact support:\n@thelastking12312345678\n@Silencedoeir\n@one_day_82"
+        support_msg = "☎️ Support\n\nFor any comments or questions, contact support:\n@Hello_Bingo_Support"
         await update.message.reply_text(support_msg)
         return
 
@@ -698,7 +698,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE, custom
             await update.message.reply_text(WITHDRAW_CLOSED_MSG)
             return
         if is_user_frozen(user_id):
-            await update.message.reply_text("❄️ Your account is frozen. Withdrawals are currently disabled. Contact support: @one_day_82")
+            await update.message.reply_text("❄️ Your account is frozen. Withdrawals are currently disabled. Contact support: @Hello_Bingo_Support")
             return
         if get_total_deposits(user_id) < 50: await update.message.reply_text(t('withdraw_locked', lang)); return
         user_state[user_id] = "withdraw_amount"
@@ -839,7 +839,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if first_name and user_exists(user_id): update_user_name(user_id, first_name)
 
     if is_user_banned(user_id):
-        await query.message.reply_text("🚫 You are banned from using this bot.\n\nContact support if you believe this is a mistake: @one_day_82")
+        await query.message.reply_text("🚫 You are banned from using this bot.\n\nContact support if you believe this is a mistake: @Hello_Bingo_Support")
         return
 
     if data in ["lang_am", "lang_en"]:
@@ -875,7 +875,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not is_withdraw_open():
             await query.message.reply_text(WITHDRAW_CLOSED_MSG)
         elif is_user_frozen(user_id):
-            await query.message.reply_text("❄️ Your account is frozen. Withdrawals are currently disabled. Contact support: @one_day_82")
+            await query.message.reply_text("❄️ Your account is frozen. Withdrawals are currently disabled. Contact support: @Hello_Bingo_Support")
         elif get_total_deposits(user_id) < 50: await query.message.reply_text(t('withdraw_locked', lang))
         else: user_state[user_id] = "withdraw_amount"; await query.message.reply_text(t('withdraw_prompt', lang, play_bal=get_play_balance(user_id), main_bal=get_main_balance(user_id)))
     elif data == "menu_history":
@@ -890,7 +890,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if user:
             link = f"https://t.me/{BOT_USERNAME}?start={user_id}"; ref_count = get_referral_count(user_id)
             await query.message.reply_text(f"👤 PROFILE\n\n🆔 ID: {user[0]}\n📱 Phone: {user[1]}\n\n💰 Main Wallet: {user[2]} ETB\n🎮 Play Wallet: {user[3]} ETB\n\n🎯 Games Played: {get_games_played_count(user_id)}\n🏆 Games Won: {get_games_won_count(user_id)}\n💵 Total Won: {get_total_won(user_id)} ETB\n\n👥 Referrals: {ref_count}\n\n🎁 Invite Link:\n{link}")
-    elif data == "menu_support": await query.message.reply_text("☎️ Support\n\nFor any comments or questions, contact support:\n@thelastking12312345678\n@Silencedoeir\n@one_day_82")
+    elif data == "menu_support": await query.message.reply_text("☎️ Support\n\nFor any comments or questions, contact support:\n@Hello_Bingo_Support")
     elif data == "menu_invite":
         link = f"https://t.me/{BOT_USERNAME}?start={user_id}"; ref_count = get_referral_count(user_id)
         await query.message.reply_text(f"🎁 Invite Friends System\n\n👥 Your Invites: {ref_count}\n\n🔗 Your Referral Link:\n{link}\n\n💰 Earn 10% commission from every deposit made by your referrals!")
@@ -908,7 +908,7 @@ async def info(update: Update, context: ContextTypes.DEFAULT_TYPE, lang=None):
     if lang == 'en':
         await update.effective_message.reply_text(
             "☎️ Support\n"
-            "If you have any problems, contact @one\\_day\\_82\n"
+            "If you have any problems, contact @Hello\\_Bingo\\_Support\n"
             "ℹ️ Information\n"
             "🎮 How to play\n"
             "|----------------------|\n"
@@ -981,7 +981,7 @@ async def info(update: Update, context: ContextTypes.DEFAULT_TYPE, lang=None):
     else:
         await update.effective_message.reply_text(
             "☎️ Support(ድጋፍ)\n"
-            "ችግር ካጋጠመዎት @one\\_day\\_82 ን ያግኙ\n"
+            "ችግር ካጋጠመዎት @Hello\\_Bingo\\_Support ን ያግኙ\n"
             "ℹ️ Information(መረጃ)\n"
             "🎮 እንዴት እንደሚጫወቱ\n"
             "|----------------------|\n"
@@ -1318,7 +1318,7 @@ def api_approve_withdrawal():
         ok, user_id, amount = db.approve_withdrawal(withdrawal_id)
         if not ok:
             return jsonify({'success': False, 'error': 'Withdrawal not found or already processed'}), 400
-    send_telegram_notify(user_id, f"✅ Withdrawal Approved!\n\n💰 Amount: {amount} ETB\n🏦 The money has been sent to your account.\n\nNeed anything else? Contact support: @one_day_82\n\n✅ ገንዘብ ማውጣት ተፈቅዷል!\n\n💰 መጠን፡ {amount} ብር\n🏦 ገንዘቡ ወደ አካውንትዎ ተልኳል።\n\nለጥያቄ እና ለድጋፍ፦ @one_day_82")
+    send_telegram_notify(user_id, f"✅ Withdrawal Approved!\n\n💰 Amount: {amount} ETB\n🏦 The money has been sent to your account.\n\nNeed anything else? Contact support: @Hello_Bingo_Support\n\n✅ ገንዘብ ማውጣት ተፈቅዷል!\n\n💰 መጠን፡ {amount} ብር\n🏦 ገንዘቡ ወደ አካውንትዎ ተልኳል።\n\nለጥያቄ እና ለድጋፍ፦ @Hello_Bingo_Support")
     return jsonify({'success': True})
 
 @flask_app.route('/api/admin/reject_withdrawal', methods=['POST', 'OPTIONS'])
@@ -1335,8 +1335,9 @@ def api_reject_withdrawal():
         ok, user_id, amount = db.reject_withdrawal(withdrawal_id)   # also refunds the Main Wallet
         if not ok:
             return jsonify({'success': False, 'error': 'Withdrawal not found or already processed'}), 400
-    send_telegram_notify(user_id, f"❌ Withdrawal Rejected\n\n💰 Amount: {amount} ETB\n⚠️ Your request was rejected by admin. The money remains in your Main Wallet.\n\nQuestions? Contact support: @one_day_82\n\n❌ ገንዘብ ማውጣት ውድቅ ተደርጓል\n\n💰 መጠን፡ {amount} ብር\n⚠️ ጥያቄዎ በአድሚን (admin) ውድቅ ተደርጓል። ገንዘቡ በዋናው የኪስ ቦርሳዎ (Main wallet) ውስጥ ይመለሳል።\n\nለጥያቄ እና ለድጋፍ፦ @one_day_82")
+    send_telegram_notify(user_id, f"❌ Withdrawal Rejected\n\n💰 Amount: {amount} ETB\n⚠️ Your request was rejected by admin. The money remains in your Main Wallet.\n\nQuestions? Contact support: @Hello_Bingo_Support\n\n❌ ገንዘብ ማውጣት ውድቅ ተደርጓል\n\n💰 መጠን፡ {amount} ብር\n⚠️ ጥያቄዎ በአድሚን (admin) ውድቅ ተደርጓል። ገንዘቡ በዋናው የኪስ ቦርሳዎ (Main wallet) ውስጥ ይመለሳል።\n\nለጥያቄ እና ለድጋፍ፦ @Hello_Bingo_Support")
     return jsonify({'success': True})
+
 @flask_app.route('/api/admin/users', methods=['GET', 'OPTIONS'])
 @require_admin
 def api_admin_users():
